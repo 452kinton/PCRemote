@@ -16,8 +16,12 @@ public interface WebApiService {
     Observable<CallBack> sendMoveEvent(@Field("angle")double angle,@Field("radio")double radio);
 
     @FormUrlEncoded
-    @POST("mouse_click")
-    Observable<CallBack> sendClickEvent(@Field("type")int type);
+    @POST("key_click")
+    Observable<CallBack> sendKeyClick(@Field("id")int id);
+
+    @FormUrlEncoded
+    @POST("mouse_btn_touch")
+    Observable<CallBack> sendMouseBtnTouchEvent(@Field("type")int type,@Field("state") int state);
 
     @POST("mouse_down")
     Observable<CallBack> sendDownEvent();

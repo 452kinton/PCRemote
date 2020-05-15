@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class ButtonAdapater extends RecyclerView.Adapter<ButtonAdapater.ButtonHo
         ButtonInfo buttonInfo = buttonInfos.get(i);
         viewHolder.tvContent.setText("");
         viewHolder.ivIcon.setImageBitmap(null);
+        Log.i("type",buttonInfo.getType()+"");
         if(buttonInfo.getType() == ButtonInfo.TYPE_TEXT){
             viewHolder.tvContent.setText(buttonInfo.getContent());
         }else{

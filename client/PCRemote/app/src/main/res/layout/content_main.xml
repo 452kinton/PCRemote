@@ -14,38 +14,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="#353A47"
-        app:layout_constraintEnd_toStartOf="@+id/recyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="0dp">
-
-
-
-
-        <ImageView
-            android:id="@+id/iv_left"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginEnd="152dp"
-            android:padding="12dp"
-            android:src="@mipmap/left_corner"
-            app:layout_constraintBottom_toBottomOf="@+id/joyStickView"
-            app:layout_constraintEnd_toEndOf="@+id/joyStickView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.348"></ImageView>
-
-        <ImageView
-            android:id="@+id/iv_right"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="152dp"
-            android:padding="16dp"
-            android:src="@mipmap/right_corner"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_left"
-            app:layout_constraintStart_toStartOf="@+id/joyStickView"
-            app:layout_constraintTop_toTopOf="@+id/iv_left"
-            app:layout_constraintVertical_bias="0.0"></ImageView>
 
         <ImageView
             android:id="@+id/iv_screen"
@@ -68,18 +41,79 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.559"></com.kinton.pcremote.widget.JoyStickView>
     </android.support.constraint.ConstraintLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:background="#8DB88B"
         android:layout_width="0dp"
-        android:padding="16dp"
-        android:background="#84B082"
         app:layout_constraintHorizontal_weight="1"
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="parent"></android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/up"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/iv_right"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/iv_left"
+            app:layout_constraintTop_toTopOf="@+id/iv_left"></ImageView>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/down"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_left"
+            app:layout_constraintEnd_toStartOf="@+id/iv_right"
+            app:layout_constraintStart_toEndOf="@+id/iv_left"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"></ImageView>
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
+            android:src="@mipmap/left_corner"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintEnd_toStartOf="@+id/iv_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="16dp"
+            android:src="@mipmap/right_corner"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_left"
+            app:layout_constraintTop_toTopOf="@+id/iv_left"></ImageView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="#84B082"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_left"
+            app:layout_constraintVertical_weight="1"></android.support.v7.widget.RecyclerView>
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>

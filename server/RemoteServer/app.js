@@ -75,11 +75,21 @@ app.post("/mouse_down",function(req, res, next){
   res.send(result);
 });
 
-app.post("/mouse_click",function(req, res, next){
+app.post("/mouse_btn_touch",function(req, res, next){
   var type = req.body.type;
-  
-  cmd.execSync("python pyscript/mouse_click.py "+type);
+  var state = req.body.state;
+  cmd.execSync("python pyscript/mouse_touch.py "+type+" "+state);
 
+  var result = {
+    errno:200,
+    result:'ok'
+  }
+  res.send(result);
+});
+
+app.post("/key_click",function(req, res, next){
+  var id = req.body.id;
+  cmd.execSync("python pyscript/key_click.py "+id);
   var result = {
     errno:200,
     result:'ok'

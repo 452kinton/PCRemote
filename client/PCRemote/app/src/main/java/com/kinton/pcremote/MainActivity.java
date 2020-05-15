@@ -153,11 +153,36 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private void iniList() {
         infos = new ArrayList<>();
 
-        ButtonInfo buttonInfo = new ButtonInfo();
-        buttonInfo.setType(ButtonInfo.TYPE_TEXT);
-        buttonInfo.setContent("UP");
+        ButtonInfo buttonInfo1 = new ButtonInfo();
+        buttonInfo1.setType(ButtonInfo.TYPE_IMG);
+        buttonInfo1.setRes_id(R.mipmap.up_white);
 
-        infos.add(buttonInfo);
+        ButtonInfo buttonInfo2 = new ButtonInfo();
+        buttonInfo2.setType(ButtonInfo.TYPE_IMG);
+        buttonInfo2.setRes_id(R.mipmap.down_white);
+
+        ButtonInfo buttonInfo3 = new ButtonInfo();
+        buttonInfo3.setType(ButtonInfo.TYPE_IMG);
+        buttonInfo3.setRes_id(R.mipmap.left_white);
+
+        ButtonInfo buttonInfo4 = new ButtonInfo();
+        buttonInfo4.setType(ButtonInfo.TYPE_IMG);
+        buttonInfo4.setRes_id(R.mipmap.right_white);
+
+        ButtonInfo buttonInfo5 = new ButtonInfo();
+        buttonInfo5.setType(ButtonInfo.TYPE_TEXT);
+
+        buttonInfo5.setContent("ESC");
+        ButtonInfo buttonInfo6 = new ButtonInfo();
+        buttonInfo6.setType(ButtonInfo.TYPE_TEXT);
+        buttonInfo6.setContent("SPACE");
+
+        infos.add(buttonInfo1);
+        infos.add(buttonInfo2);
+        infos.add(buttonInfo3);
+        infos.add(buttonInfo4);
+        infos.add(buttonInfo5);
+        infos.add(buttonInfo6);
 
         adapater = new ButtonAdapater(this, infos, this);
 
@@ -253,8 +278,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 v.setScaleY(0.8f);
                 if (v.getId() == R.id.iv_left) {
                     ivLeft.setImageResource(R.mipmap.left_corner_press);
+                    if (isConnected) {
+                        NetworkUtils.getInstance().getWebApiService().sendMouseBtnTouchEvent(ClickEvent.left, 1)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe();
+                    }
                 } else if (v.getId() == R.id.iv_right) {
                     ivRight.setImageResource(R.mipmap.right_corner_press);
+                    if (isConnected) {
+                        NetworkUtils.getInstance().getWebApiService().sendMouseBtnTouchEvent(ClickEvent.RIGHT, 1)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe();
+                    }
                 }
 
                 break;
@@ -263,16 +300,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 v.setScaleY(1f);
                 if (v.getId() == R.id.iv_left) {
                     ivLeft.setImageResource(R.mipmap.left_corner);
-                    if(isConnected){
-                        NetworkUtils.getInstance().getWebApiService().sendClickEvent(ClickEvent.left)
+                    if (isConnected) {
+                        NetworkUtils.getInstance().getWebApiService().sendMouseBtnTouchEvent(ClickEvent.left, 0)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe();
                     }
                 } else if (v.getId() == R.id.iv_right) {
                     ivRight.setImageResource(R.mipmap.right_corner);
-                    if(isConnected){
-                        NetworkUtils.getInstance().getWebApiService().sendClickEvent(ClickEvent.RIGHT)
+                    if (isConnected) {
+                        NetworkUtils.getInstance().getWebApiService().sendMouseBtnTouchEvent(ClickEvent.RIGHT, 0)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe();
@@ -297,7 +334,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "" + infos.get(position).getContent(), Toast.LENGTH_SHORT).show();
+        if (isConnected) {
+            NetworkUtils.getInstance().getWebApiService().sendKeyClick(position)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe();
+        }
     }
 
     @Override
@@ -339,11 +381,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public void onUp() {
         isHandle = false;
-        if(isConnected){
-        NetworkUtils.getInstance().getWebApiService().sendUpEvent()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+        if (isConnected) {
+            NetworkUtils.getInstance().getWebApiService().sendUpEvent()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe();
         }
     }
 

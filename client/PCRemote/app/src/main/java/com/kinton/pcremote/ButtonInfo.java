@@ -28,7 +28,7 @@ public class ButtonInfo {
     private String content;
     private int type;
     private int res_id;
-    public final static int TYPE_IMG = 0;
+    public final static int TYPE_IMG = 1;
     public final static int TYPE_TEXT = 0;
 
 
