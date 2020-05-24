@@ -1,8 +1,11 @@
 package com.kinton.pcremote;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.ComponentCallbacks;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private Thread heartBeatsThread = null;
 
+    private String url = "192.168.0.102";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initScreen();
@@ -65,8 +71,35 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         initView();
         initEvent();
         iniList();
-        NetworkUtils.getInstance().init("192.168.0.100:3000/");
+        NetworkUtils.getInstance().init(url+":3000/");
         //connectPC();
+    }
+
+    private Dialog mDialog = null;
+
+    private void showDialog(){
+        if(mDialog ==null){
+            final EditText etUrl = new EditText(this);
+            etUrl.setText(url);
+            mDialog = new AlertDialog.Builder(this).setTitle("设置服务器IP :")
+                    .setView(etUrl)
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton("连接", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            url = etUrl.getText().toString();
+                            NetworkUtils.getInstance().init(url+":3000/");
+                            connectPC();
+                        }
+                    })
+                    .create();
+        }
+        mDialog.show();
     }
 
     private void connectPC() {
@@ -92,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     public void onError(Throwable e) {
                         Log.i("error", e.toString());
                         Toast.makeText(MainActivity.this, "网络异常！！", Toast.LENGTH_SHORT).show();
+                        showDialog();
                     }
 
                     @Override
